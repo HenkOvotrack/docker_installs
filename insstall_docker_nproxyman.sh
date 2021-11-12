@@ -3,10 +3,9 @@
 installApps()
 {
     OS="$REPLY" ## <-- This $REPLY is about OS Selection
-    echo "We can install Docker-CE, Docker-Compose, NGinX Proxy Manager, and Portainer-CE."
+    echo "We can install Docker-CE, Docker-Compose and Portainer-CE."
     echo "Please select 'y' for each item you would like to install."
-    echo "NOTE: Without Docker you cannot use Docker-Compose, NGinx Proxy Manager, or Portainer-CE."
-    echo "       You also must have Docker-Compose for NGinX Proxy Manager to be installed."
+    echo "NOTE: Without Docker you cannot use Docker-Compose, or Portainer-CE."
     echo ""
     echo ""
     
@@ -31,7 +30,7 @@ installApps()
         echo ""
     fi
 
-    read -rp "NGinX Proxy Manager (y/n): " NPM
+    
     read -rp "Portainer-CE (y/n): " PTAIN
 
     if [[ "$PTAIN" == [yY] ]]; then
@@ -226,50 +225,7 @@ startInstall()
         echo "$X"
     done
 
-    ##########################################
-    ###     Install NGinX Proxy Manager    ###
-    ##########################################
-    if [[ "$NPM" == [yY] ]]; then
-        # pull an nginx proxy manager docker-compose file from github
-        echo "Pulling a default NGinX Proxy Manager docker-compose.yml file."
-        echo ""
-        echo ""
-
-        mkdir nginx-proxy-manager
-        cd nginx-proxy-manager
-
-        curl https://raw.githubusercontent.com/bmcgonag/docker_installs/master/docker_compose.nginx_proxy_manager.yml -o docker-compose.yml
-
-        echo ""
-        echo ""
-        echo "Running the docker-compose.yml to install and start NGinX Proxy Manager"
-        echo ""
-        echo ""
-
-        if [[ "$OS" == "1" ]]; then
-          docker-compose up -d
-        fi
-
-        if [[ "$OS" != "1" ]]; then
-          sudo docker-compose up -d
-        fi
-
-        echo ""
-        echo ""
-        echo "Navigate to your server hostname / IP address on port 81 to setup"
-        echo "NGinX Proxy Manager admin account."
-        echo ""
-        echo "The default login credentials for NGinX Proxy Manager are:"
-        echo "    username: admin@example.com"
-        echo "    password: changeme"
-
-        echo ""
-        echo ""
-        echo ""
-        sleep 3s
-        cd
-    fi
-
+    
 
     #####################################
     ###      Install Portainer-CE     ###
